@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.blogs.models import Blog, Category
 
@@ -16,3 +16,9 @@ def posts_by_category(request, category_id):
     except (Category.DoesNotExist, Blog.DoesNotExist) as e:
         print(e)
         return redirect("home")
+
+
+def blog_detail(request, slug):
+    blog = get_object_or_404(Blog, slug=slug, status="Published")
+    context = {"blog": blog}
+    return render(request, "blog-detail.html", context)
