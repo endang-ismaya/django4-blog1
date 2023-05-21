@@ -14,7 +14,10 @@ class BlogAmin(admin.ModelAdmin):
         "updated_at",
     )
     search_fields = ("id", "title", "category__category_name", "status")
-    list_editable = ("is_featured",)
+    list_editable = (
+        "is_featured",
+        "status",
+    )
 
 
 admin.site.register(Category)
