@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 
 from apps.blogs.models import Blog, Category
-from apps.users.utils import get_sidebar_active
+from apps.dashboards.forms import CategoryForm
+from apps.users.utils import is_post
 
 
 @login_required(login_url="users_login")
@@ -37,6 +38,14 @@ def dash_category_add(request):
     """
     Handle addition of Category
     """
+    if is_post(request):
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("dash_categories")
+    else:
+        form = CategoryForm()
+
     nav_dash_categories = "bg-warning"
-    context = {"nav_dash_categories": nav_dash_categories}
+    context = {"nav_dash_categories": nav_dash_categories, "form": form}
     return render(request, "dashboards/add-category.html", context)
