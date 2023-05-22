@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- Title Start -->
+{% block title %}
+  <title>Django Blog | Add Category</title>
+{% endblock title %}
+<!-- Title End -->
+<!-- content start-->
+{% block content %}
+  <div class="row mb-5">
+    <!-- Left Sidebar Start -->
+    <div class="col-md-3">{% include "dashboards/dash_includes/dash-left-sidebar.html" %}</div>
+    <!-- Left Sidebar End -->
+    <!-- Right Side Start -->
+    <div class="col-md-9">
+      <h3>Add Category</h3>
+    </div>
+    <!-- Right Side End -->
+  </div>
+{% endblock content %}
+<!-- content End-->

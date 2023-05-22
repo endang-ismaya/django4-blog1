@@ -30,3 +30,13 @@ def dash_categories(request):
     nav_dash_categories = "bg-warning"
     context = {"nav_dash_categories": nav_dash_categories}
     return render(request, "dashboards/categories.html", context)
+
+
+@login_required(login_url="users_login")
+def dash_category_add(request):
+    """
+    Handle addition of Category
+    """
+    nav_dash_categories = "bg-warning"
+    context = {"nav_dash_categories": nav_dash_categories}
+    return render(request, "dashboards/add-category.html", context)
