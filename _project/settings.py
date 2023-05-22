@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # internal apps
     "apps.blogs",
     "apps.users",
+    "apps.dashboards",
     # external apps
     "crispy_forms",
     "crispy_bootstrap5",
