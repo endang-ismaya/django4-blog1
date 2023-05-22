@@ -3,16 +3,16 @@
 {% load crispy_forms_tags %}
 <!-- Title Start -->
 {% block title %}
-  <title>Django Blog | Registration</title>
+  <title>Django Blog | Login</title>
 {% endblock title %}
 <!-- Title End -->
 <!-- content start-->
 {% block content %}
-  <h3 class="text-center">User Registration</h3>
-  <form action="{% url 'users_register' %}" method="post" class="w-50 mx-auto">
+  <h3 class="text-center">User Login</h3>
+  <form action="{% url 'users_login' %}" method="post" class="w-50 mx-auto">
     {% csrf_token %}
     {{ form | crispy }}
-    <button type="submit" class="btn btn-primary w-100 my-3">Register</button>
+    <button type="submit" class="btn btn-primary w-100 my-3">Login</button>
   </form>
 {% endblock content %}
 <!-- content End-->
