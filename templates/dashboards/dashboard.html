@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- Title Start -->
+{% block title %}
+  <title>Django Blog | Dashboard</title>
+{% endblock title %}
+<!-- Title End -->
+<!-- content start-->
+{% block content %}
+  <div class="row mb-5">
+    <!-- Left Sidebar Start -->
+    <div class="col-md-3">
+      <div class="nav flex-column nav-pills bg-light" aria-orientation="vertical">
+        <a href="" class="nav-link text-dark bg-warning">Dashboard</a>
+        <a href="" class="nav-link text-dark">Categories</a>
+        <a href="" class="nav-link text-dark">Blogs</a>
+        <a href="" class="nav-link text-dark">Logout</a>
+      </div>
+    </div>
+    <!-- Left Sidebar End -->
+    <!-- Right Side Start -->
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col">
+          <div class="card border-default mb-3">
+            <div class="card-header text-center text-uppercase fw-bold">All Categories</div>
+            <div class="card-body text-dark">
+              <h5 class="card-title text-center">{{ category_count }}</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border-default mb-3">
+            <div class="card-header text-center text-uppercase fw-bold">All Posts</div>
+            <div class="card-body text-dark">
+              <h5 class="card-title text-center">{{ blogs_count }}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Right Side End -->
+  </div>
+{% endblock content %}
+<!-- content End-->
