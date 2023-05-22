@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
 from apps.blogs.models import Blog, Category
@@ -49,3 +49,36 @@ def dash_category_add(request):
     nav_dash_categories = "bg-warning"
     context = {"nav_dash_categories": nav_dash_categories, "form": form}
     return render(request, "dashboards/add-category.html", context)
+
+
+@login_required(login_url="users_login")
+def dash_category_edit(request, pk):
+    """
+    Handle edit category
+    """
+    nav_dash_categories = "bg-warning"
+    category = get_object_or_404(Category, pk=pk)
+    if is_post(request):
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect("dash_categories")
+    else:
+        form = CategoryForm(instance=category)
+
+    context = {
+        "nav_dash_categories": nav_dash_categories,
+        "form": form,
+        "category": category,
+    }
+    return render(request, "dashboards/edit-category.html", context)
+
+
+@login_required(login_url="users_login")
+def dash_category_delete(request, pk):
+    """
+    Handle the deletion of Category
+    """
+    category = get_object_or_404(Category, pk=pk)
+    category.delete()
+    return redirect("dash_categories")

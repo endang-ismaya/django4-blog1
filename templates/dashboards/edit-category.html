@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!-- Title Start -->
+{% block title %}
+  <title>Django Blog | Add Category</title>
+{% endblock title %}
+<!-- Title End -->
+<!-- content start-->
+{% block content %}
+  <div class="row mb-5">
+    <!-- Left Sidebar Start -->
+    <div class="col-md-3">{% include "dashboards/dash_includes/dash-left-sidebar.html" %}</div>
+    <!-- Left Sidebar End -->
+    <!-- Right Side Start -->
+    <div class="col-md-9">
+      <h3 class="mb-3">Edit Category</h3>
+      <div class="w-50">
+        <form action="{% url 'dash_category_edit' category.id %}" method="post">
+          {% csrf_token %}
+          {{ form | crispy }}
+          <button class="btn btn-primary float-end" type="submit">Update Category</button>
+        </form>
+      </div>
+    </div>
+    <!-- Right Side End -->
+  </div>
+{% endblock content %}
+<!-- content End-->

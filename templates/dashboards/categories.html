@@ -35,8 +35,8 @@
               <td>{{ cat.created_at }}</td>
               <td>{{ cat.updated_at }}</td>
               <td>
-                <a href=""><i class="fa fa-edit text-info"></i></a>&nbsp;&nbsp;
-                <a href=""><i class="fa fa-trash text-danger"></i></a>
+                <a href="{% url 'dash_category_edit' cat.id %}"><i class="fa fa-edit text-info"></i></a>&nbsp;&nbsp;
+                <a href="{% url "dash_category_delete" cat.id %}"><i class="fa fa-trash text-danger"></i></a>
               </td>
             </tr>
           {% endfor %}
