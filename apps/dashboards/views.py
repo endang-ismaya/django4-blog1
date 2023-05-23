@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 from apps.blogs.models import Blog, Category
 from apps.dashboards.forms import BlogPostForm, CategoryForm
@@ -127,7 +128,10 @@ def dash_post_edit(request, pk):
     if is_post(request):
         form = BlogPostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            form.save()
+            edited_post = form.save()
+            title = form.cleaned_data["title"] + "-" + str(edited_post.id)
+            edited_post.slug = slugify(title)
+            edited_post.save()
             return redirect("dash_posts")
     else:
         form = BlogPostForm(instance=post)
@@ -148,3 +152,13 @@ def dash_post_delete(request, pk):
     post = get_object_or_404(Blog, pk=pk)
     post.delete()
     return redirect("dash_posts")
+
+
+@login_required(login_url="users_login")
+def dash_users(request):
+    """
+    To views all users
+    """
+    users = User.objects.all()
+    context = {"nav_dash_users": "bg-warning", "users": users}
+    return render(request, "dashboards/users.html", context)

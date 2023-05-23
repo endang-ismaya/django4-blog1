@@ -19,4 +19,6 @@ urlpatterns = [
     path("posts/add/", views.dash_post_add, name="dash_post_add"),
     path("posts/edit/<int:pk>", views.dash_post_edit, name="dash_post_edit"),
     path("posts/delete/<int:pk>", views.dash_post_delete, name="dash_post_delete"),
+    # manage users
+    path("users/", views.dash_users, name="dash_users"),
 ]
