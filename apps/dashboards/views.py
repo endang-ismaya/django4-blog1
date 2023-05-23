@@ -116,3 +116,35 @@ def dash_post_add(request):
         form = BlogPostForm()
     context = {"nav_dash_blogs": "bg-warning", "form": form}
     return render(request, "dashboards/add-post.html", context)
+
+
+@login_required(login_url="users_login")
+def dash_post_edit(request, pk):
+    """
+    Handle edit category
+    """
+    post = get_object_or_404(Blog, pk=pk)
+    if is_post(request):
+        form = BlogPostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect("dash_posts")
+    else:
+        form = BlogPostForm(instance=post)
+
+    context = {
+        "nav_dash_blogs": "bg-warning",
+        "form": form,
+        "post": post,
+    }
+    return render(request, "dashboards/edit-post.html", context)
+
+
+@login_required(login_url="users_login")
+def dash_post_delete(request, pk):
+    """
+    Handle the deletion of Post
+    """
+    post = get_object_or_404(Blog, pk=pk)
+    post.delete()
+    return redirect("dash_posts")

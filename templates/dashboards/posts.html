@@ -51,8 +51,8 @@
               <td>{{ post.created_at }}</td>
               <td>{{ post.updated_at }}</td>
               <td>
-                <a href="{% url 'dash_category_edit' post.id %}"><i class="fa fa-edit text-info"></i></a>&nbsp;&nbsp;
-                <a href="{% url "dash_category_delete" post.id %}"><i class="fa fa-trash text-danger"></i></a>
+                <a href="{% url 'dash_post_edit' post.id %}"><i class="fa fa-edit text-info"></i></a>&nbsp;&nbsp;
+                <a href="{% url "dash_post_delete" post.id %}"><i class="fa fa-trash text-danger"></i></a>
                 <a href="{% url "blog_detail" post.slug %}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
               </td>
             </tr>
