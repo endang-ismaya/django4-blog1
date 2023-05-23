@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.utils.text import slugify
 
 from apps.blogs.models import Blog, Category
-from apps.dashboards.forms import CategoryForm
+from apps.dashboards.forms import BlogPostForm, CategoryForm
 from apps.users.utils import is_post
 
 
@@ -86,3 +87,32 @@ def dash_posts(request):
 
     context = {"nav_dash_blogs": "bg-warning", "posts": posts}
     return render(request, "dashboards/posts.html", context)
+
+
+@login_required(login_url="users_login")
+def dash_post_add(request):
+    """
+    Handle the addition of Blog Post
+    """
+    if is_post(request):
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            # temporary saving
+            new_post = form.save(commit=False)
+
+            # assign the author
+            new_post.author = request.user
+            new_post.save()  # save to get the id
+            # assign the slug
+            title = form.cleaned_data["title"] + "-" + str(new_post.id)
+            new_post.slug = slugify(title)
+
+            # save and redirect
+            new_post.save()
+            return redirect("dash_posts")
+        else:
+            print(form.errors)
+    else:
+        form = BlogPostForm()
+    context = {"nav_dash_blogs": "bg-warning", "form": form}
+    return render(request, "dashboards/add-post.html", context)

@@ -16,4 +16,5 @@ urlpatterns = [
     ),
     # blog post
     path("posts/", views.dash_posts, name="dash_posts"),
+    path("posts/add/", views.dash_post_add, name="dash_post_add"),
 ]
