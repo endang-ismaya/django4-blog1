@@ -13,12 +13,11 @@ def dashboard(request):
     """
     category_count = Category.objects.all().count()
     blogs_count = Blog.objects.all().count()
-    nav_dashboard = "bg-warning"
 
     context = {
         "category_count": category_count,
         "blogs_count": blogs_count,
-        "nav_dashboard": nav_dashboard,
+        "nav_dashboard": "bg-warning",
     }
     return render(request, "dashboards/dashboard.html", context)
 
@@ -28,8 +27,7 @@ def dash_categories(request):
     """
     show categories dashboard
     """
-    nav_dash_categories = "bg-warning"
-    context = {"nav_dash_categories": nav_dash_categories}
+    context = {"nav_dash_categories": "bg-warning"}
     return render(request, "dashboards/categories.html", context)
 
 
@@ -46,8 +44,7 @@ def dash_category_add(request):
     else:
         form = CategoryForm()
 
-    nav_dash_categories = "bg-warning"
-    context = {"nav_dash_categories": nav_dash_categories, "form": form}
+    context = {"nav_dash_categories": "bg-warning", "form": form}
     return render(request, "dashboards/add-category.html", context)
 
 
@@ -56,7 +53,6 @@ def dash_category_edit(request, pk):
     """
     Handle edit category
     """
-    nav_dash_categories = "bg-warning"
     category = get_object_or_404(Category, pk=pk)
     if is_post(request):
         form = CategoryForm(request.POST, instance=category)
@@ -67,7 +63,7 @@ def dash_category_edit(request, pk):
         form = CategoryForm(instance=category)
 
     context = {
-        "nav_dash_categories": nav_dash_categories,
+        "nav_dash_categories": "bg-warning",
         "form": form,
         "category": category,
     }
@@ -82,3 +78,11 @@ def dash_category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     category.delete()
     return redirect("dash_categories")
+
+
+@login_required(login_url="users_login")
+def dash_posts(request):
+    posts = Blog.objects.all()
+
+    context = {"nav_dash_blogs": "bg-warning", "posts": posts}
+    return render(request, "dashboards/posts.html", context)

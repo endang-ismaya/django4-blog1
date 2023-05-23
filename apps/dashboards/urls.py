@@ -3,6 +3,7 @@ from apps.dashboards import views
 
 urlpatterns = [
     path("", views.dashboard, name="dashboard"),
+    # categories
     path("categories/", views.dash_categories, name="dash_categories"),
     path("categories/add/", views.dash_category_add, name="dash_category_add"),
     path(
@@ -13,4 +14,6 @@ urlpatterns = [
         views.dash_category_delete,
         name="dash_category_delete",
     ),
+    # blog post
+    path("posts/", views.dash_posts, name="dash_posts"),
 ]
