@@ -2,9 +2,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import permission_required
 
 from apps.blogs.models import Blog, Category
-from apps.dashboards.forms import BlogPostForm, CategoryForm
+from apps.dashboards.forms import AddUserForm, BlogPostForm, CategoryForm
 from apps.users.utils import is_post
 
 
@@ -155,6 +156,7 @@ def dash_post_delete(request, pk):
 
 
 @login_required(login_url="users_login")
+@permission_required("auth.view_user", login_url="users_login")
 def dash_users(request):
     """
     To views all users
@@ -162,3 +164,22 @@ def dash_users(request):
     users = User.objects.all()
     context = {"nav_dash_users": "bg-warning", "users": users}
     return render(request, "dashboards/users.html", context)
+
+
+@login_required(login_url="users_login")
+@permission_required("auth.add_user", login_url="users_login")
+def dash_user_add(request):
+    """
+    Handle the addition of a User
+    """
+    if is_post(request):
+        form = AddUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("dash_users")
+        else:
+            print(form.errors)
+    else:
+        form = AddUserForm()
+    context = {"nav_dash_users": "bg-warning", "form": form}
+    return render(request, "dashboards/add-user.html", context)

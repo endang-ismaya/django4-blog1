@@ -29,6 +29,9 @@ def login(request):
     """
     handle user login
     """
+    if request.user.is_authenticated:
+        return redirect("dashboard")
+
     if is_post(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
