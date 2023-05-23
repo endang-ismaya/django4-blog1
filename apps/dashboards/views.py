@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 
 from apps.blogs.models import Blog, Category
-from apps.dashboards.forms import AddUserForm, BlogPostForm, CategoryForm
+from apps.dashboards.forms import AddUserForm, BlogPostForm, CategoryForm, EditUserForm
 from apps.users.utils import is_post
 
 
@@ -183,3 +183,37 @@ def dash_user_add(request):
         form = AddUserForm()
     context = {"nav_dash_users": "bg-warning", "form": form}
     return render(request, "dashboards/add-user.html", context)
+
+
+@login_required(login_url="users_login")
+@permission_required("auth.change_user", login_url="users_login")
+def dash_user_edit(request, pk):
+    """
+    Handle edit user
+    """
+    user = get_object_or_404(User, pk=pk)
+    if is_post(request):
+        form = EditUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect("dash_users")
+    else:
+        form = EditUserForm(instance=user)
+
+    context = {
+        "nav_dash_users": "bg-warning",
+        "form": form,
+        "user": user,
+    }
+    return render(request, "dashboards/edit-user.html", context)
+
+
+@login_required(login_url="users_login")
+@permission_required("auth.delete_user", login_url="users_login")
+def dash_user_delete(request, pk):
+    """
+    Handle the deletion of Post
+    """
+    user = get_object_or_404(User, pk=pk)
+    user.delete()
+    return redirect("dash_users")

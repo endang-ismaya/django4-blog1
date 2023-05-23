@@ -22,4 +22,6 @@ urlpatterns = [
     # manage users
     path("users/", views.dash_users, name="dash_users"),
     path("users/add/", views.dash_user_add, name="dash_user_add"),
+    path("users/edit/<int:pk>", views.dash_user_edit, name="dash_user_edit"),
+    path("users/delete/<int:pk>", views.dash_user_delete, name="dash_user_delete"),
 ]

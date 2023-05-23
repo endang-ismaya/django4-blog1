@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 <!-- Title Start -->
 {% block title %}
-  <title>Django Blog | Add User</title>
+  <title>Django Blog | Edit User</title>
 {% endblock title %}
 <!-- Title End -->
 <!-- content start-->
@@ -14,12 +14,12 @@
     <!-- Left Sidebar End -->
     <!-- Right Side Start -->
     <div class="col-md-9">
-      <h3 class="mb-3">Add User</h3>
+      <h3 class="mb-3">Edit User</h3>
       <div class="w-100">
-        <form action="{% url 'dash_user_add' %}" method="post">
+        <form action="{% url 'dash_user_edit' user.id %}" method="post">
           {% csrf_token %}
           {{ form | crispy }}
-          <button class="btn btn-primary float-end" type="submit">Add User</button>
+          <button class="btn btn-primary float-end" type="submit">Update User</button>
         </form>
       </div>
     </div>
